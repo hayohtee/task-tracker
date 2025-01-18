@@ -3,6 +3,7 @@ package data
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"time"
 )
@@ -51,4 +52,14 @@ func (t *TaskList) Get(filename string) error {
 	}
 
 	return json.Unmarshal(fileContent, t)
+}
+
+// Save converts the TaskList into JSON format and
+// writes the content to a file using the specified name.
+func (t *TaskList) Save(filename string) error {
+	js, err := json.MarshalIndent(t, "", "\t")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(filename, js, 0644)
 }
