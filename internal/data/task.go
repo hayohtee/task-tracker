@@ -101,3 +101,17 @@ func (t *TaskList) Delete(pos int) error {
 
 	return nil
 }
+
+// Mark update the status of a task and also set the
+// CreatedAt field to the current timestamp.
+func (t *TaskList) Mark(pos int, status status) error {
+	if pos <= 0 || pos > len(*t) {
+		return fmt.Errorf("task %d does not exist", pos)
+	}
+
+	taskList := *t
+	taskList[pos-1].Status = status
+	taskList[pos-1].UpdatedAt = time.Now()
+
+	return nil
+}
