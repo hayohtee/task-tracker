@@ -63,3 +63,16 @@ func (t *TaskList) Save(filename string) error {
 	}
 	return os.WriteFile(filename, js, 0644)
 }
+
+// Add insert a new task into TaskList.
+func (t *TaskList) Add(description string) {
+	item := task{
+		ID:          len(*t),
+		Description: description,
+		CreatedAt:   time.Now(),
+		Status:      StatusTodo,
+	}
+
+	*t = append(*t, item)
+}
+
