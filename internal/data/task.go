@@ -90,3 +90,15 @@ func (t *TaskList) Update(pos int, description string) error {
 
 	return nil
 }
+
+// Delete a task from the task list based on its position.
+func (t *TaskList) Delete(pos int) error {
+	if pos <= 0 || pos > len(*t) {
+		return fmt.Errorf("task %d does not exist", pos)
+	}
+
+	taskList := *t
+	*t = append(taskList[:pos-1], taskList[pos:]...)
+
+	return nil
+}
