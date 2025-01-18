@@ -66,8 +66,17 @@ func (t *TaskList) Save(filename string) error {
 
 // Add insert a new task into TaskList.
 func (t *TaskList) Add(description string) {
+	taskList := *t
+	var id int
+
+	if len(taskList) == 0 {
+		id = 0
+	} else {
+		id = taskList[len(taskList)-1].ID + 1
+	}
+
 	item := task{
-		ID:          len(*t),
+		ID:          id,
 		Description: description,
 		CreatedAt:   time.Now(),
 		Status:      StatusTodo,
