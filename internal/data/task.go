@@ -76,8 +76,7 @@ func (t *TaskList) Add(description string) {
 	*t = append(*t, item)
 }
 
-// Update check if the provided task exist based on its position
-// and then update the description based on the value provided and
+// Update the description based on the value provided and
 // set the updated_at to the current timestamp.
 func (t *TaskList) Update(pos int, description string) error {
 	if pos <= 0 || pos > len(*t) {
