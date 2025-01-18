@@ -124,3 +124,15 @@ func (t *TaskList) List() string {
 	}
 	return total
 }
+
+// ListByStatus returns a string containing the list of all tasks in the TaskList
+// that match the given status.
+func (t *TaskList) ListByStatus(status status) string {
+	total := ""
+	for index, value := range *t {
+		if value.Status == status {
+			total += fmt.Sprintf("%d    :%s\n", index+1, value.Description)
+		}
+	}
+	return total
+}
