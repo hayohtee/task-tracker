@@ -71,3 +71,22 @@ func TestAdd(t *testing.T) {
 		t.Errorf("expect the ID of the second task to be %d but got %d", 2, taskList[0].ID)
 	}
 }
+
+func TestUpdate(t *testing.T) {
+	var taskList data.TaskList
+
+	// Add a new task.
+	task := "Test Task"
+	taskList.Add(task)
+
+	// Update the added task.
+	newTask := "Test New Task"
+	if err := taskList.Update(1, newTask); err != nil {
+		t.Fatal(err)
+	}
+
+	// Check if the task was updated successfully.
+	if taskList[0].Description != newTask {
+		t.Errorf("expected %q but got %q instead", newTask, taskList[0].Description)
+	}
+}
