@@ -121,3 +121,32 @@ func TestDelete(t *testing.T) {
 	}
 }
 
+func TestMark(t *testing.T) {
+	var taskList data.TaskList
+
+	// Add new tasks to the list.
+	tasks := []string{"Test Task 1", "Test Task 2"}
+	for _, task := range tasks {
+		taskList.Add(task)
+	}
+
+	// Mark the first task as in-progress
+	if err := taskList.Mark(1, data.StatusInProgress); err != nil {
+		t.Fatal(err)
+	}
+
+	// Check if the status of the first task is updated successfully.
+	if taskList[0].Status != data.StatusInProgress {
+		t.Errorf("expected status %q but got %q instead", data.StatusInProgress, taskList[0].Status)
+	}
+
+	// Mark the second task as done.
+	if err := taskList.Mark(2, data.StatusDone); err != nil {
+		t.Fatal(err)
+	}
+
+	// Check if the status of the second task is updated successfully.
+	if taskList[1].Status != data.StatusDone {
+		t.Errorf("expected status %q but got %q instead", data.StatusDone, taskList[1].Status)
+	}
+}
