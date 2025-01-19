@@ -70,7 +70,7 @@ func (t *TaskList) Add(description string) {
 	var id int
 
 	if len(taskList) == 0 {
-		id = 0
+		id = 1
 	} else {
 		id = taskList[len(taskList)-1].ID + 1
 	}
