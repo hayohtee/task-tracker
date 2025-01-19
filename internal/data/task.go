@@ -138,9 +138,11 @@ func (t *TaskList) List() string {
 // that match the given status.
 func (t *TaskList) ListByStatus(status status) string {
 	total := ""
-	for index, value := range *t {
+	counter := 0
+	for _, value := range *t {
 		if value.Status == status {
-			total += fmt.Sprintf("%d    :%s\n", index+1, value.Description)
+			counter++
+			total += fmt.Sprintf("%d. %s\n", counter, value.Description)
 		}
 	}
 	return total
