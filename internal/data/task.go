@@ -129,7 +129,7 @@ func (t *TaskList) Mark(pos int, status status) error {
 func (t *TaskList) List() string {
 	total := ""
 	for index, value := range *t {
-		total += fmt.Sprintf("%d    : %s    [%s]\n", index+1, value.Description, value.Status)
+		total += fmt.Sprintf("%d. %s\tstatus: %q\n", index+1, value.Description, value.Status)
 	}
 	return total
 }
