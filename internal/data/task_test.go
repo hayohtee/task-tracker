@@ -170,3 +170,54 @@ func TestList(t *testing.T) {
 		t.Errorf("expected %q but got %q instead", expected, got)
 	}
 }
+
+func TestListByStatus(t *testing.T) {
+	var taskList data.TaskList
+
+	// Add new tasks to the list.
+	tasks := []string{"Test Task 1", "Test Task 2", "Test Task 3", "Test Task 4", "Test Task 5"}
+	for _, task := range tasks {
+		taskList.Add(task)
+	}
+
+	// Mark task 2 and task 3 as done
+	if err := taskList.Mark(2, data.StatusDone); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := taskList.Mark(3, data.StatusDone); err != nil {
+		t.Fatal(err)
+	}
+
+	expected := fmt.Sprintf("%d. %s\n", 1, tasks[1])
+	expected += fmt.Sprintf("%d. %s\n", 2, tasks[2])
+
+	got := taskList.ListByStatus(data.StatusDone)
+
+	// Check if it list all done tasks correctly.
+	if got != expected {
+		t.Errorf("expected %q but got %q instead", expected, got)
+	}
+
+	// Mark task 1, 4 and 5 as in-progress
+	if err := taskList.Mark(1, data.StatusInProgress); err != nil {
+		t.Fatal(err)
+	}
+	if err := taskList.Mark(4, data.StatusInProgress); err != nil {
+		t.Fatal(err)
+	}
+	if err := taskList.Mark(5, data.StatusInProgress); err != nil {
+		t.Fatal(err)
+	}
+
+	expected = fmt.Sprintf("%d. %s\n", 1, tasks[0])
+	expected += fmt.Sprintf("%d. %s\n", 2, tasks[3])
+	expected += fmt.Sprintf("%d. %s\n", 3, tasks[4])
+
+	got = taskList.ListByStatus(data.StatusInProgress)
+
+	// Check if it list all done tasks correctly.
+	if got != expected {
+		t.Errorf("expected %q but got %q instead", expected, got)
+	}
+}
