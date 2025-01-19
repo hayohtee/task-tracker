@@ -1,6 +1,7 @@
 package data_test
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -148,5 +149,24 @@ func TestMark(t *testing.T) {
 	// Check if the status of the second task is updated successfully.
 	if taskList[1].Status != data.StatusDone {
 		t.Errorf("expected status %q but got %q instead", data.StatusDone, taskList[1].Status)
+	}
+}
+
+func TestList(t *testing.T) {
+	var taskList data.TaskList
+
+	// Add new tasks to the list.
+	tasks := []string{"Test Task 1", "Test Task 2"}
+	for _, task := range tasks {
+		taskList.Add(task)
+	}
+
+	expected := fmt.Sprintf("%d. %s\tstatus: %q\n", 1, tasks[0], data.StatusTodo)
+	expected += fmt.Sprintf("%d. %s\tstatus: %q\n", 2, tasks[1], data.StatusTodo)
+
+	got := taskList.List()
+
+	if got != expected {
+		t.Errorf("expected %q but got %q instead", expected, got)
 	}
 }
