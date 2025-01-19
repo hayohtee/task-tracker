@@ -70,7 +70,7 @@ func (t *TaskList) Add(description string) {
 	var id int
 
 	if len(taskList) == 0 {
-		id = 0
+		id = 1
 	} else {
 		id = taskList[len(taskList)-1].ID + 1
 	}
@@ -129,7 +129,7 @@ func (t *TaskList) Mark(pos int, status status) error {
 func (t *TaskList) List() string {
 	total := ""
 	for index, value := range *t {
-		total += fmt.Sprintf("%d    : %s    [%s]\n", index+1, value.Description, value.Status)
+		total += fmt.Sprintf("%d. %s\tstatus: %q\n", index+1, value.Description, value.Status)
 	}
 	return total
 }
@@ -138,9 +138,11 @@ func (t *TaskList) List() string {
 // that match the given status.
 func (t *TaskList) ListByStatus(status status) string {
 	total := ""
-	for index, value := range *t {
+	counter := 0
+	for _, value := range *t {
 		if value.Status == status {
-			total += fmt.Sprintf("%d    :%s\n", index+1, value.Description)
+			counter++
+			total += fmt.Sprintf("%d. %s\n", counter, value.Description)
 		}
 	}
 	return total
