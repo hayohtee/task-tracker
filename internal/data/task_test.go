@@ -90,3 +90,34 @@ func TestUpdate(t *testing.T) {
 		t.Errorf("expected %q but got %q instead", newTask, taskList[0].Description)
 	}
 }
+
+func TestDelete(t *testing.T) {
+	var taskList data.TaskList
+
+	// Add new tasks to the list.
+	tasks := []string{"Test Task 1", "Test Task 2"}
+	for _, task := range tasks {
+		taskList.Add(task)
+	}
+
+	// Check if the length of the list is the same initially.
+	if len(taskList) != len(tasks) {
+		t.Errorf("expected length %d but got %d instead", 2, len(taskList))
+	}
+
+	// Delete the second task
+	if err := taskList.Delete(2); err != nil {
+		t.Fatal(err)
+	}
+
+	// Check if the length of the task list is 1
+	if len(taskList) != 1 {
+		t.Error("task list should contain only one task")
+	}
+
+	// Check if the remaining task is equal to the first task
+	if taskList[0].Description != tasks[0] {
+		t.Errorf("expected %q but got %q instead", tasks[0], taskList[0].Description)
+	}
+}
+
