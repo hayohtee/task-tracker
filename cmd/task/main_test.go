@@ -129,4 +129,17 @@ func TestTaskCLI(t *testing.T) {
 			t.Errorf("expected %q but got %q instead", expected, string(out))
 		}
 	})
+
+	t.Run("List Done Tasks", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "list", "done")
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		expected := fmt.Sprintf("%d. %s\n", 1, "New Test Task 3")
+		if string(out) != expected {
+			t.Errorf("expected %q but got %q instead", expected, string(out))
+		}
+	})
 }
