@@ -27,4 +27,12 @@ func TestMain(m *testing.M) {
 		fmt.Fprintf(os.Stderr, "cannot build tool %s: %s", binName, err.Error())
 		os.Exit(1)
 	}
+
+	fmt.Println("Running tests...")
+	result := m.Run()
+
+	os.Remove(binName)
+	os.Remove(fileName)
+
+	os.Exit(result)
 }
