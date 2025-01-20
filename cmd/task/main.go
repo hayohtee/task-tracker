@@ -130,5 +130,26 @@ func main() {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
+
+	case "mark-done":
+		markDoneCmd.Parse(os.Args[2:])
+		args := markDoneCmd.Args()
+		if len(args) != 1 {
+			fmt.Fprintln(os.Stderr, "required an argument containing the position of the task")
+			os.Exit(1)
+		}
+
+		// Convert the first argument to an int.
+		pos, err := strconv.Atoi(args[0])
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
+		// Mark the task as done.
+		if err := taskList.Mark(pos, data.StatusDone); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	}
 }
