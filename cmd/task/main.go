@@ -109,5 +109,26 @@ func main() {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
+
+	case "mark-in-progress":
+		markInProgressCmd.Parse(os.Args[2:])
+		args := markInProgressCmd.Args()
+		if len(args) != 1 {
+			fmt.Fprintln(os.Stderr, "required an argument containing the position of the task")
+			os.Exit(1)
+		}
+
+		// Convert the first argument to an int.
+		pos, err := strconv.Atoi(args[0])
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
+		// Mark the task as in-progress.
+		if err := taskList.Mark(pos, data.StatusInProgress); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	}
 }
