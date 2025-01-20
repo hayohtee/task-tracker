@@ -150,7 +150,7 @@ func TestTaskCLI(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		expected := fmt.Sprintf("%d. %s\n", 1, tasks[1])
+		expected := fmt.Sprintf("%d. %s\n\n", 1, tasks[1])
 		if string(out) != expected {
 			t.Errorf("expected %q but got %q instead", expected, string(out))
 		}
