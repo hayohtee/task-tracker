@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+var taskFileName = ".task.json"
+
 func main() {
 	addCmd := flag.NewFlagSet("add", flag.ExitOnError)
 	updateCmd := flag.NewFlagSet("update", flag.ExitOnError)
@@ -20,7 +22,4 @@ func main() {
 		os.Exit(1)
 	}
 
-	switch os.Args[1] {
-
-	}
 }
