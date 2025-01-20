@@ -46,6 +46,13 @@ func main() {
 			os.Exit(1)
 		}
 		taskList.Add(args[0])
+
+		// Save the new list.
+		if err := taskList.Save(taskFileName); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		// Print successful message
 		fmt.Printf("Task added successfully (ID: %d)\n", taskList[len(taskList)-1].ID)
 	}
 
