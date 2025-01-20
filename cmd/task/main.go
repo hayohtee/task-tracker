@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/hayohtee/task-tracker/internal/data"
 )
@@ -54,6 +55,33 @@ func main() {
 		}
 		// Print successful message
 		fmt.Printf("Task added successfully (ID: %d)\n", taskList[len(taskList)-1].ID)
+
+	case "update":
+		updateCmd.Parse(os.Args[2:])
+		args := updateCmd.Args()
+		if len(args) != 2 {
+			fmt.Fprintln(os.Stderr, "required 2 arguments and in the format <<1 \"New Task Name\">>")
+			os.Exit(1)
+		}
+
+		// Convert the first argument to an int
+		pos, err := strconv.Atoi(args[0])
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
+		// Update the task
+		if err := taskList.Update(pos, args[1]); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
+		// Save the new list.
+		if err := taskList.Save(taskFileName); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	}
 
 }
