@@ -100,4 +100,20 @@ func TestTaskCLI(t *testing.T) {
 			t.Fatal(err)
 		}
 	})
+
+	t.Run("List All Tasks", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "list")
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		expected := fmt.Sprintf("%d. %s\tstatus: %q\n", 1, "New Test Task 1", "todo")
+		expected += fmt.Sprintf("%d. %s\tstatus: %q\n", 2, tasks[1], "in-progress")
+		expected += fmt.Sprintf("%d. %s\tstatus: %q\n\n", 3, "New Test Task 3", "done")
+
+		if string(out) != expected {
+			t.Errorf("expected %q but got %q instead", expected, string(out))
+		}
+	})
 }
