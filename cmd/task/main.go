@@ -159,6 +159,12 @@ func main() {
 			os.Exit(1)
 		}
 
+		// Save the new list.
+		if err := taskList.Save(taskFileName); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
 	case "list":
 		listCmd.Parse(os.Args[2:])
 		status := listCmd.Arg(0)
