@@ -36,3 +36,9 @@ func TestMain(m *testing.M) {
 
 	os.Exit(result)
 }
+
+func TestTaskCLI(t *testing.T) {
+	tasks := []string{"Test Task 1", "Test Task 2", "Test Task 3", "Test Task 4", "Test Task 5"}
+
+	
+}
