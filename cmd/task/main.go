@@ -132,6 +132,12 @@ func main() {
 			os.Exit(1)
 		}
 
+		// Save the new list.
+		if err := taskList.Save(taskFileName); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+
 	case "mark-done":
 		markDoneCmd.Parse(os.Args[2:])
 		args := markDoneCmd.Args()
