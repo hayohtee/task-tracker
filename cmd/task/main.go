@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// taskFileName is the default file name for the task-cli.
 var taskFileName = ".task.json"
 
 func main() {
@@ -20,6 +21,11 @@ func main() {
 	if len(os.Args) < 2 {
 		fmt.Fprintln(os.Stderr, "no sub-commands provided")
 		os.Exit(1)
+	}
+
+	// Check if the TASK_FILENAME environment variable is set and update the taskFileName.
+	if os.Getenv("TASK_FILENAME") != "" {
+		taskFileName = os.Getenv("TASK_FILENAME")
 	}
 
 }
