@@ -37,5 +37,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	switch os.Args[1] {
+	case "add":
+		addCmd.Parse(os.Args[2:])
+		if err := add(os.Stdout, addCmd.Args); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	}
 
 }
