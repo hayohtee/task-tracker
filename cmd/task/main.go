@@ -40,10 +40,13 @@ func main() {
 	switch os.Args[1] {
 	case "add":
 		addCmd.Parse(os.Args[2:])
-		if err := add(os.Stdout, addCmd.Args); err != nil {
-			fmt.Fprintln(os.Stderr, err)
+		args := addCmd.Args()
+		if len(args) != 1 {
+			fmt.Fprintln(os.Stderr, "required an argument containing the name of the task")
 			os.Exit(1)
 		}
+		taskList.Add(args[0])
+		fmt.Printf("Task added successfully (ID: %d)\n", taskList[len(taskList)-1].ID)
 	}
 
 }
