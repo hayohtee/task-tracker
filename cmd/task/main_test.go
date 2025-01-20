@@ -62,4 +62,16 @@ func TestTaskCLI(t *testing.T) {
 			}
 		}
 	})
+
+	t.Run("Update Some Tasks", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "update", "1", "New Test Task 1")
+		if err := cmd.Run(); err != nil {
+			t.Fatal(err)
+		}
+
+		cmd = exec.Command(cmdPath, "update", "3", "New Test Task 3")
+		if err := cmd.Run(); err != nil {
+			t.Fatal(err)
+		}
+	})
 }
