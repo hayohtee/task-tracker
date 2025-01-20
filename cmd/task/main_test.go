@@ -86,4 +86,11 @@ func TestTaskCLI(t *testing.T) {
 			t.Fatal(err)
 		}
 	})
+
+	t.Run("Mark A Task As In-Progress", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "mark-in-progress", "2")
+		if err := cmd.Run(); err != nil {
+			t.Fatal(err)
+		}
+	})
 }
