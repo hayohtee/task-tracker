@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/hayohtee/task-tracker/internal/data"
 )
 
 // taskFileName is the default file name for the task-cli.
@@ -27,5 +29,13 @@ func main() {
 	if os.Getenv("TASK_FILENAME") != "" {
 		taskFileName = os.Getenv("TASK_FILENAME")
 	}
+
+	// Declare a TaskList variable and attempt to read the contents from the filename.
+	var taskList data.TaskList
+	if err := taskList.Get(taskFileName); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+
 
 }
