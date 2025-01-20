@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/hayohtee/task-tracker/internal/data"
 )
@@ -151,5 +152,24 @@ func main() {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
+
+	case "list":
+		listCmd.Parse(os.Args[2:])
+		status := listCmd.Arg(0)
+		if status != "" {
+			switch strings.ToLower(status) {
+			case "done":
+				fmt.Println(taskList.ListByStatus(data.StatusDone))
+			case "in-progress":
+				fmt.Println(taskList.ListByStatus(data.StatusInProgress))
+			case "todo":
+				fmt.Println(taskList.ListByStatus(data.StatusTodo))
+			default:
+				fmt.Fprintln(os.Stderr, "invalid status:", status)
+				os.Exit(1)
+			}
+			return
+		}
+		fmt.Println(taskList.List())
 	}
 }
