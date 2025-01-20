@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
 	"testing"
 )
 
 var (
-	binName = "task-cli"
+	binName  = "task-cli"
 	fileName = ".task.json"
 )
 
@@ -40,5 +41,25 @@ func TestMain(m *testing.M) {
 func TestTaskCLI(t *testing.T) {
 	tasks := []string{"Test Task 1", "Test Task 2", "Test Task 3", "Test Task 4", "Test Task 5"}
 
-	
+	dir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	cmdPath := filepath.Join(dir, binName)
+
+	t.Run("Add new tasks", func(t *testing.T) {
+		for index, task := range tasks {
+			cmd := exec.Command(cmdPath, "add", task)
+			out, err := cmd.CombinedOutput()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			expected := fmt.Sprintf("Task added successfully (ID: %d)\n", index+1)
+			if string(out) != expected {
+				t.Errorf("expected %q but got %q instead\n", expected, string(out))
+			}
+		}
+	})
 }
