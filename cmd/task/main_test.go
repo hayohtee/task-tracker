@@ -93,4 +93,11 @@ func TestTaskCLI(t *testing.T) {
 			t.Fatal(err)
 		}
 	})
+
+	t.Run("Mark A Task As Done", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "mark-done", "3")
+		if err := cmd.Run(); err != nil {
+			t.Fatal(err)
+		}
+	})
 }
